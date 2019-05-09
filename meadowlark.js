@@ -2,6 +2,8 @@
 const express = require('express');
 const app = express();
 
+const fortune = require('./lib/fortune.js');
+
 // 设置handlebars 视图引擎
 const handlebars = require('express-handlebars').create({ defaultLayout:'main' });
 app.engine('handlebars', handlebars.engine);
@@ -17,14 +19,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/about', (req, res) => {
-    const fortunes = [
-        'Conquer your fears or they will conquer you.',
-        'Rivers need springs.',
-        'Do not fear what you don\'t know.',
-        'You will have a pleasant surprise.',
-        'Whenever possible, keep it simple.',
-    ];
-    res.render('about', { fortune: fortunes[Math.floor(Math.random() * fortunes.length)] });
+    res.render('about', { fortune: fortune.getFortune() });
 });
 
 // 定制 404 页面
